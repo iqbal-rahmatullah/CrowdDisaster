@@ -10,6 +10,12 @@ export interface BreadcrumbItem {
     href: string;
 }
 
+export interface DashboardStatisticCardProps {
+    title: string;
+    value: string | number;
+    icon: LucideIcon;
+}
+
 export interface NavGroup {
     title: string;
     items: NavItem[];
@@ -27,6 +33,7 @@ export interface SharedData {
     quote: { message: string; author: string };
     auth: Auth;
     ziggy: Config & { location: string };
+
     [key: string]: unknown;
 }
 
@@ -38,5 +45,6 @@ export interface User {
     email_verified_at: string | null;
     created_at: string;
     updated_at: string;
+
     [key: string]: unknown; // This allows for additional properties...
 }
