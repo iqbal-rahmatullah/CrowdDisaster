@@ -30,7 +30,7 @@ export default function Dashboard({ repportCount, userCount, allRepports }: Dash
                     <CardStatisticDashboard title={'Jumlah Posko Bencana'} value={0} icon={House} />
                     <CardStatisticDashboard title={'Jumlah Pengguna'} value={userCount} icon={User} />
                 </div>
-                <div className="flex gap-x-5">
+                <div className="flex flex-col gap-x-0 gap-y-5 md:flex-row md:gap-x-5 md:gap-y-0">
                     <div className="border-sidebar-border/70 dark:border-sidebar-border flex w-full overflow-hidden rounded-xl border md:w-1/2">
                         <RepportChartByMonth allRepports={allRepports} />
                     </div>
