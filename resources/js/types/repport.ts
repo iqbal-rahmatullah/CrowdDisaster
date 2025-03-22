@@ -16,6 +16,18 @@ export enum RepportStatus {
     DONE = 'done',
 }
 
+export enum ReportFileType {
+    IMAGE = 'image',
+    VIDEO = 'video',
+}
+
+export interface RepportProof {
+    id: number;
+    repport_id: number;
+    file_path: string;
+    file_type: ReportFileType;
+}
+
 export interface Repport {
     id: number;
     latitude: string;
@@ -29,6 +41,7 @@ export interface Repport {
     additional_information: string;
     created_at: string;
     updated_at: string;
+    repport_proofs: RepportProof[];
 }
 
 export const GetRepportTypeLabel: Record<RepportType, string> = {

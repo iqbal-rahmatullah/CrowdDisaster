@@ -22,24 +22,28 @@ class Repport extends Model
         'additional_information',
     ];
 
-    public function reportProofs()
+    public function repportProofs()
     {
         return $this->hasMany(RepportProof::class);
     }
 
-    public function repportComments() {
+    public function repportComments()
+    {
         return $this->hasMany(RepportComment::class);
     }
 
-    public function repportImpacts() {
+    public function repportImpacts()
+    {
         return $this->hasMany(RepportImpact::class);
     }
 
-    public function user() {
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 
-    public function repportSupports() {
+    public function repportSupports()
+    {
         return $this->hasMany(RepportSupport::class);
     }
 }
