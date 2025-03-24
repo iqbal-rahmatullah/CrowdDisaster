@@ -7,6 +7,7 @@ import { Head } from '@inertiajs/react';
 import 'leaflet/dist/leaflet.css';
 import { Circle, MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
 
+//Breadcrumb
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'Dashboard',
