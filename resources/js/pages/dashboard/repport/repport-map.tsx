@@ -1,15 +1,17 @@
-import { Badge } from '@/components/ui/badge';
+import { MarkerRepport } from '@/components/repport/MarkerRepport';
 import { Button } from '@/components/ui/button';
+import { Skeleton } from '@/components/ui/skeleton';
 import AppLayout from '@/layouts/app-layout';
-import { convertToIndonesianDate } from '@/lib/utils/convertTime';
-import { getIconMarker } from '@/lib/utils/getIconMarker';
 import { getRadiusColor } from '@/lib/utils/getRadiusColor';
+import { useGetAddress } from '@/services/use-get-address';
 import { BreadcrumbItem } from '@/types';
-import { GetRepportStatusBackground, GetRepportStatusLabel, Repport } from '@/types/repport';
-import { Head, Link } from '@inertiajs/react';
+import { Location } from '@/types/location';
+import { Repport } from '@/types/repport';
+import { Head } from '@inertiajs/react';
+import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import { HiCalendar, HiLocationMarker } from 'react-icons/hi';
-import { Circle, MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
+import { useEffect, useRef, useState } from 'react';
+import { Circle, MapContainer, Marker, Popup, TileLayer, useMapEvents } from 'react-leaflet';
 
 //Breadcrumb
 const breadcrumbs: BreadcrumbItem[] = [
@@ -24,6 +26,77 @@ const breadcrumbs: BreadcrumbItem[] = [
 ];
 
 export default function RepportMapPage({ allRepports }: { allRepports: Repport[] }) {
+    const LocationMarker = () => {
+        const [newPin, setNewPin] = useState<Location>({ latitude: 0, longitude: 0 });
+        const newPinMarkerRef = useRef(null);
+        const addressState = useGetAddress({
+            location: {
+                latitude: newPin.latitude,
+                longitude: newPin.longitude,
+            },
+        });
+
+        useMapEvents({
+            click(e) {
+                const { lat, lng } = e.latlng;
+                setNewPin({
+                    latitude: lat,
+                    longitude: lng,
+                });
+            },
+        });
+
+        useEffect(() => {
+            if (newPin && newPin.latitude !== 0 && newPin.longitude !== 0 && newPinMarkerRef.current) {
+                addressState.refetch();
+                // @ts-expect-error type dont exist
+                newPinMarkerRef.current.openPopup();
+            }
+        }, [newPin]);
+
+        return (
+            <>
+                <TileLayer url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png" />
+                {allRepports.map((repport) => (
+                    <>
+                        <MarkerRepport key={repport.id} repport={repport} />
+                        <Circle
+                            center={[parseFloat(repport.latitude), parseFloat(repport.longitude)]}
+                            radius={repport.radius}
+                            color={getRadiusColor(repport.status)}
+                            fillOpacity={0.2}
+                        />
+                    </>
+                ))}
+                {newPin.latitude != 0 && newPin.longitude != 0 ? (
+                    <Marker
+                        position={[newPin.latitude, newPin.longitude]}
+                        interactive={false}
+                        ref={newPinMarkerRef}
+                        icon={L.icon({
+                            iconUrl: '/img/marker.png',
+                            iconSize: [40, 40],
+                            popupAnchor: [0, -20],
+                        })}
+                    >
+                        <Popup closeButton={false}>
+                            {addressState.isLoading || addressState.isPending || addressState.isFetching ? (
+                                <Skeleton className="mb-3 h-6 w-full" />
+                            ) : addressState.isFetched ? (
+                                <p className="text-sm font-medium">{addressState.data}</p>
+                            ) : (
+                                <p className="text-sm font-medium">Tidak ada alamat</p>
+                            )}
+                            <div className="grid place-content-center">
+                                <Button className="mx-auto">Tambah Posko Bantuan</Button>
+                            </div>
+                        </Popup>
+                    </Marker>
+                ) : null}
+            </>
+        );
+    };
+
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Pemantauan Map" />
@@ -35,57 +108,7 @@ export default function RepportMapPage({ allRepports }: { allRepports: Repport[]
                     style={{ height: '100%', width: '100%' }}
                     doubleClickZoom={false}
                 >
-                    <TileLayer url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png" />
-                    {allRepports.map((repport) => (
-                        <>
-                            <Marker
-                                key={repport.id}
-                                position={[parseFloat(repport.latitude), parseFloat(repport.longitude)]}
-                                icon={getIconMarker(repport)}
-                            >
-                                <Popup>
-                                    <div className="relative mb-4 h-[180px] w-full overflow-hidden rounded-lg">
-                                        <img
-                                            src={`/img/dummy/${repport.repport_proofs[0].file_path}`}
-                                            className="h-full w-full object-cover"
-                                            alt="Bukti laporan"
-                                        />
-                                        <div className="absolute bottom-2 left-2">
-                                            <Badge className={`${GetRepportStatusBackground[repport.status]}`}>
-                                                {GetRepportStatusLabel[repport.status]}
-                                            </Badge>
-                                        </div>
-                                    </div>
-
-                                    <h2 className="text-lg font-bold">{repport.title}</h2>
-                                    <p>{repport.description}</p>
-                                    <div className="flex items-center gap-x-2">
-                                        <HiLocationMarker className="text-primary flex-shrink-0 text-lg" />
-                                        <p className="text-xs font-medium">{repport.address}</p>
-                                    </div>
-                                    <div className="flex items-center gap-x-2">
-                                        <HiCalendar className="text-primary flex-shrink-0 text-lg" />
-                                        <p className="text-xs font-medium">
-                                            {convertToIndonesianDate(new Date(repport.created_at).toLocaleString())}
-                                        </p>
-                                    </div>
-
-                                    <div className="mt-4 text-center">
-                                        <Link href={`/repports/${repport.id}`} className="w-full">
-                                            <Button>Lihat Selengkapnya</Button>
-                                        </Link>
-                                    </div>
-                                </Popup>
-                            </Marker>
-
-                            <Circle
-                                center={[parseFloat(repport.latitude), parseFloat(repport.longitude)]}
-                                radius={repport.radius}
-                                color={getRadiusColor(repport.status)}
-                                fillOpacity={0.2}
-                            />
-                        </>
-                    ))}
+                    <LocationMarker />
                 </MapContainer>
             </div>
         </AppLayout>

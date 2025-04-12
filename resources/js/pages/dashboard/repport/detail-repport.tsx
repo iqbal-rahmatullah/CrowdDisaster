@@ -19,8 +19,6 @@ import {
 } from 'react-icons/hi';
 
 export default function RepportMapPage({ repport }: { repport: Repport }) {
-    console.log(repport);
-
     //Breadcrumb
     const breadcrumbs: BreadcrumbItem[] = [
         {
