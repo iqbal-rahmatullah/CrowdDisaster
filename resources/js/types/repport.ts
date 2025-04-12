@@ -28,6 +28,33 @@ export interface RepportProof {
     file_type: ReportFileType;
 }
 
+export interface RepportSupport {
+    id: number;
+    repport_id: number;
+    user_id: number;
+    created_at: string;
+    updated_at: string;
+}
+
+export interface RepportImpact {
+    id: number;
+    repport_id: number;
+    name: string;
+    value: number;
+    icon: number;
+    created_at: string;
+    updated_at: string;
+}
+
+export interface RepportComment {
+    id: number;
+    repport_id: number;
+    user_id: number;
+    comment: string;
+    created_at: string;
+    updated_at: string;
+}
+
 export interface Repport {
     id: number;
     latitude: string;
@@ -42,7 +69,17 @@ export interface Repport {
     created_at: string;
     updated_at: string;
     repport_proofs: RepportProof[];
+    repport_supports: RepportSupport[];
+    repport_comments: RepportComment[];
+    repport_impacts: RepportImpact[];
 }
+
+export const GetRepportStatusLabel: Record<RepportStatus, string> = {
+    [RepportStatus.NEED_SUPPORT]: 'Butuh Bantuan',
+    [RepportStatus.NEED_RESPONSIBLE]: 'Butuh Penanganan',
+    [RepportStatus.IN_PROGRESS]: 'Sedang Diproses',
+    [RepportStatus.DONE]: 'Selesai',
+};
 
 export const GetRepportTypeLabel: Record<RepportType, string> = {
     [RepportType.FLOOD]: 'Banjir',
@@ -53,4 +90,11 @@ export const GetRepportTypeLabel: Record<RepportType, string> = {
     [RepportType.TSUNAMI]: 'Tsunami',
     [RepportType.VOLCANO]: 'Letusan Gunung Berapi',
     [RepportType.DROUGHT]: 'Kekeringan',
+};
+
+export const GetRepportStatusBackground: Record<RepportStatus, string> = {
+    [RepportStatus.NEED_SUPPORT]: 'bg-yellow-500',
+    [RepportStatus.NEED_RESPONSIBLE]: 'bg-red-500',
+    [RepportStatus.IN_PROGRESS]: 'bg-blue-500',
+    [RepportStatus.DONE]: 'bg-green-500',
 };

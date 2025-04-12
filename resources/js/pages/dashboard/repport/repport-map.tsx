@@ -1,10 +1,12 @@
+import { Button } from '@/components/ui/button';
 import AppLayout from '@/layouts/app-layout';
 import { getIconMarker } from '@/lib/utils/getIconMarker';
 import { getRadiusColor } from '@/lib/utils/getRadiusColor';
 import { BreadcrumbItem } from '@/types';
 import { Repport } from '@/types/repport';
-import { Head } from '@inertiajs/react';
+import { Head, Link } from '@inertiajs/react';
 import 'leaflet/dist/leaflet.css';
+import { HiCalendar, HiLocationMarker } from 'react-icons/hi';
 import { Circle, MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
 
 //Breadcrumb
@@ -20,8 +22,6 @@ const breadcrumbs: BreadcrumbItem[] = [
 ];
 
 export default function RepportMapPage({ allRepports }: { allRepports: Repport[] }) {
-    console.log(allRepports);
-
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Pemantauan Map" />
@@ -42,14 +42,23 @@ export default function RepportMapPage({ allRepports }: { allRepports: Repport[]
                                 icon={getIconMarker(repport)}
                             >
                                 <Popup>
-                                    <img src={`/img/dummy/${repport.repport_proofs[0].file_path}`} className="h-[180px] w-full rounded-lg"></img>
-                                    <strong>{repport.title}</strong>
-                                    <br />
-                                    {repport.description}
-                                    <br />
-                                    📍 {repport.address}
-                                    <br />
-                                    🕒 {new Date(repport.created_at).toLocaleString()}
+                                    <img src={`/img/dummy/${repport.repport_proofs[0].file_path}`} className="mb-4 h-[180px] w-full rounded-lg"></img>
+                                    <h2 className="text-lg font-bold">{repport.title}</h2>
+                                    <p>{repport.description}</p>
+                                    <div className="flex items-center gap-x-2">
+                                        <HiLocationMarker className="text-primary text-lg" />
+                                        <p className="text-xs font-medium">{repport.address}</p>
+                                    </div>
+                                    <div className="flex items-center gap-x-2">
+                                        <HiCalendar className="text-primary text-lg" />
+                                        <p className="text-xs font-medium">{new Date(repport.created_at).toLocaleString()}</p>
+                                    </div>
+
+                                    <div className="mt-4 text-center">
+                                        <Link href={`/repports/${repport.id}`} className="w-full">
+                                            <Button>Lihat Selengkapnya</Button>
+                                        </Link>
+                                    </div>
                                 </Popup>
                             </Marker>
 
