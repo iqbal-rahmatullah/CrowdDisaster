@@ -1,9 +1,11 @@
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import AppLayout from '@/layouts/app-layout';
+import { convertToIndonesianDate } from '@/lib/utils/convertTime';
 import { getIconMarker } from '@/lib/utils/getIconMarker';
 import { getRadiusColor } from '@/lib/utils/getRadiusColor';
 import { BreadcrumbItem } from '@/types';
-import { Repport } from '@/types/repport';
+import { GetRepportStatusBackground, GetRepportStatusLabel, Repport } from '@/types/repport';
 import { Head, Link } from '@inertiajs/react';
 import 'leaflet/dist/leaflet.css';
 import { HiCalendar, HiLocationMarker } from 'react-icons/hi';
@@ -42,16 +44,30 @@ export default function RepportMapPage({ allRepports }: { allRepports: Repport[]
                                 icon={getIconMarker(repport)}
                             >
                                 <Popup>
-                                    <img src={`/img/dummy/${repport.repport_proofs[0].file_path}`} className="mb-4 h-[180px] w-full rounded-lg"></img>
+                                    <div className="relative mb-4 h-[180px] w-full overflow-hidden rounded-lg">
+                                        <img
+                                            src={`/img/dummy/${repport.repport_proofs[0].file_path}`}
+                                            className="h-full w-full object-cover"
+                                            alt="Bukti laporan"
+                                        />
+                                        <div className="absolute bottom-2 left-2">
+                                            <Badge className={`${GetRepportStatusBackground[repport.status]}`}>
+                                                {GetRepportStatusLabel[repport.status]}
+                                            </Badge>
+                                        </div>
+                                    </div>
+
                                     <h2 className="text-lg font-bold">{repport.title}</h2>
                                     <p>{repport.description}</p>
                                     <div className="flex items-center gap-x-2">
-                                        <HiLocationMarker className="text-primary text-lg" />
+                                        <HiLocationMarker className="text-primary flex-shrink-0 text-lg" />
                                         <p className="text-xs font-medium">{repport.address}</p>
                                     </div>
                                     <div className="flex items-center gap-x-2">
-                                        <HiCalendar className="text-primary text-lg" />
-                                        <p className="text-xs font-medium">{new Date(repport.created_at).toLocaleString()}</p>
+                                        <HiCalendar className="text-primary flex-shrink-0 text-lg" />
+                                        <p className="text-xs font-medium">
+                                            {convertToIndonesianDate(new Date(repport.created_at).toLocaleString())}
+                                        </p>
                                     </div>
 
                                     <div className="mt-4 text-center">

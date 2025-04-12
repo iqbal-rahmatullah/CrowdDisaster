@@ -15,6 +15,18 @@ class RepportController extends Controller
         ]);
     }
 
+    public function index()
+    {
+        return Inertia::render('dashboard/repport/index', [
+            'allRepports' => Repport::with([
+                'repportProofs',
+                'repportComments',
+                'repportImpacts',
+                'user',
+            ])->get(),
+        ]);
+    }
+
     public function showRepport(Repport $repport)
     {
         return Inertia::render('dashboard/repport/detail-repport', [
