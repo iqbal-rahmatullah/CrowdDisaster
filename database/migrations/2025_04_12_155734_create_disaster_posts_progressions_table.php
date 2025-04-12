@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('disaster_posts_progressions', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('disaster_post_id')->constrained('disaster_posts')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->text('progression');
             $table->timestamps();
         });
     }

@@ -13,6 +13,14 @@ return new class extends Migration
     {
         Schema::create('disaster_posts', function (Blueprint $table) {
             $table->id();
+            $table->string('title');
+            $table->text('description');
+            $table->integer('quota');
+            $table->string('contact');
+            $table->text('address');
+            $table->string('latitude');
+            $table->string('longitude');
+
             $table->timestamps();
         });
     }

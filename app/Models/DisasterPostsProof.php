@@ -4,14 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class DisasterPostsRefugees extends Model
+class DisasterPostsProof extends Model
 {
     protected $fillable = [
         'disaster_posts_id',
-        'name',
-        'phone',
-        'nik',
-        'gender',
+        'file_path',
+        'file_type',
     ];
 
     public function disasterPosts()
