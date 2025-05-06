@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\DisasterPosts;
 use App\Models\Repport;
 use Inertia\Inertia;
 
@@ -12,6 +13,10 @@ class RepportController extends Controller
     {
         return Inertia::render('dashboard/repport/repport-map', [
             'allRepports' => Repport::with('repportProofs')->get(),
+            'allDisasterPost' => DisasterPosts::with([
+                'disasterPostsProof',
+                'disasterPostsRefugees'
+            ])->get(),
         ]);
     }
 
@@ -34,7 +39,7 @@ class RepportController extends Controller
                 'repportProofs',
                 'repportComments',
                 'repportImpacts',
-                'repportSupports',
+                'repportSupports.user',
             ]),
         ]);
     }

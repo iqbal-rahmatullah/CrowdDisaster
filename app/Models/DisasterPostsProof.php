@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class DisasterPostsProof extends Model
 {
     protected $fillable = [
-        'disaster_posts_id',
+        'disaster_post_id',
         'file_path',
         'file_type',
     ];

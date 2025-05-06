@@ -1,3 +1,4 @@
+import { DialogRepportSupport } from '@/components/repport/DialogRepportSupport';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -8,6 +9,7 @@ import { BreadcrumbItem } from '@/types';
 import { GetRepportStatusBackground, GetRepportStatusLabel, GetRepportTypeLabel, Repport } from '@/types/repport';
 import { Head } from '@inertiajs/react';
 import { ArrowRight } from 'lucide-react';
+import { useState } from 'react';
 import {
     HiCalendar,
     HiChatAlt,
@@ -18,7 +20,9 @@ import {
     HiOutlineUserCircle,
 } from 'react-icons/hi';
 
-export default function RepportMapPage({ repport }: { repport: Repport }) {
+export default function DetailRepportPage({ repport }: { repport: Repport }) {
+    const [isDialogSupportOpen, setIsDialogSupportOpen] = useState(false);
+
     //Breadcrumb
     const breadcrumbs: BreadcrumbItem[] = [
         {
@@ -112,7 +116,7 @@ export default function RepportMapPage({ repport }: { repport: Repport }) {
                                         <p className="text-xs font-medium">{repport.repport_supports.length} orang mendukung</p>
                                     </div>
                                     <div className="flex w-2/12 justify-end">
-                                        <Button variant={'ghost'}>
+                                        <Button variant={'ghost'} onClick={() => setIsDialogSupportOpen(true)}>
                                             <ArrowRight className="h-4 w-4" />
                                         </Button>
                                     </div>
@@ -161,6 +165,8 @@ export default function RepportMapPage({ repport }: { repport: Repport }) {
                         </Card>
                     </div>
                 </div>
+
+                <DialogRepportSupport isDialogOpen={isDialogSupportOpen} setIsDialogOpen={setIsDialogSupportOpen} repport={repport} />
             </section>
         </AppLayout>
     );

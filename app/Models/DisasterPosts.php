@@ -26,11 +26,11 @@ class DisasterPosts extends Model
 
     public function disasterPostsProof()
     {
-        return $this->hasMany(DisasterPostsProof::class);
+        return $this->hasMany(DisasterPostsProof::class, 'disaster_post_id');
     }
 
     public function disasterPostsRefugees()
     {
-        return $this->hasMany(DisasterPostsRefugees::class);
+        return $this->hasMany(DisasterPostsRefugees::class, 'disaster_post_id');
     }
 }

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class DisasterPostsProgression extends Model
 {
     protected $fillable = [
-        'disaster_posts_id',
+        'disaster_post_id',
         'user_id',
         'progression',
     ];

@@ -1,3 +1,5 @@
+import { User } from '.';
+
 export enum RepportType {
     FLOOD = 'flood',
     EARTHQUAKE = 'earthquake',
@@ -34,6 +36,7 @@ export interface RepportSupport {
     user_id: number;
     created_at: string;
     updated_at: string;
+    user: User;
 }
 
 export interface RepportImpact {
