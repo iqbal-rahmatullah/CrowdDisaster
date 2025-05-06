@@ -28,8 +28,6 @@ export default function DetailPostDisasterPage({ disasterPost }: DetailPostDisas
         },
     ];
 
-    console.log(disasterPost);
-
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title={disasterPost.title} />

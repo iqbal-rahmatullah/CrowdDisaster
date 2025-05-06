@@ -78,7 +78,7 @@ export interface Repport {
 }
 
 export const GetRepportStatusLabel: Record<RepportStatus, string> = {
-    [RepportStatus.NEED_SUPPORT]: 'Butuh Bantuan',
+    [RepportStatus.NEED_SUPPORT]: 'Butuh Dukungan',
     [RepportStatus.NEED_RESPONSIBLE]: 'Butuh Penanganan',
     [RepportStatus.IN_PROGRESS]: 'Sedang Diproses',
     [RepportStatus.DONE]: 'Selesai',

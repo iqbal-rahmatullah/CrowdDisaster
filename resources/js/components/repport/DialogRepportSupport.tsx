@@ -9,11 +9,9 @@ type DialogRepportSupportProps = {
 };
 
 export const DialogRepportSupport = ({ isDialogOpen, setIsDialogOpen, repport }: DialogRepportSupportProps) => {
-    console.log(repport);
-
     return (
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-            <DialogContent className="z-[9999] sm:max-w-[425px]">
+            <DialogContent className="sm:max-w-[425px]">
                 <DialogTitle className="mb-3">Daftar Orang Yang Mendukung</DialogTitle>
                 <div className="max-h-[400px] space-y-4 overflow-y-auto pr-2">
                     {repport.repport_supports.map((item, index) => (

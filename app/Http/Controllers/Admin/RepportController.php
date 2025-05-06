@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\DisasterPosts;
 use App\Models\Repport;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class RepportController extends Controller
@@ -42,5 +43,22 @@ class RepportController extends Controller
                 'repportSupports.user',
             ]),
         ]);
+    }
+
+    public function editStatusRepport(Request $request, Repport $repport)
+    {
+        try {
+            $repport->update([
+                'status' => $request->input('status'),
+            ]);
+
+            return redirect()->back()->with([
+                'success' => 'Status Laporan Berhasil Diubah',
+            ]);
+        } catch (\Exception $e) {
+            return redirect()->back()->with([
+                'error' => 'Status Laporan Gagal Diubah',
+            ]);
+        }
     }
 }

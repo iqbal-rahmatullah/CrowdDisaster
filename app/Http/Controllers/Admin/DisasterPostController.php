@@ -54,8 +54,6 @@ class DisasterPostController extends Controller
 
             return redirect()->route('repports.map')->with('success', 'Posko Bencana berhasil ditambahkan!');
         } catch (\Exception $e) {
-            session()->flash('error', 'Gagal menambahkan posko bencana. Silakan coba lagi.');
-
             return redirect()->back()->with('error', 'Gagal menambahkan posko bencana. Silakan coba lagi.');
         }
     }

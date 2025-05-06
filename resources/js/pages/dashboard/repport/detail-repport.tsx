@@ -1,15 +1,20 @@
+import { DialogEditRepport } from '@/components/repport/DialogEditRepport';
 import { DialogRepportSupport } from '@/components/repport/DialogRepportSupport';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
+import { repportUpdateStatusValidationSchema, RepportUpdateStatusValidationSchema } from '@/components/validation/repport';
 import AppLayout from '@/layouts/app-layout';
 import { convertToIndonesianDate } from '@/lib/utils/convertTime';
 import { BreadcrumbItem } from '@/types';
+import { PageProps } from '@/types/inertia';
 import { GetRepportStatusBackground, GetRepportStatusLabel, GetRepportTypeLabel, Repport } from '@/types/repport';
-import { Head } from '@inertiajs/react';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Head, router, usePage } from '@inertiajs/react';
 import { ArrowRight } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
 import {
     HiCalendar,
     HiChatAlt,
@@ -19,9 +24,22 @@ import {
     HiOutlineTrendingDown,
     HiOutlineUserCircle,
 } from 'react-icons/hi';
+import { toast } from 'sonner';
 
 export default function DetailRepportPage({ repport }: { repport: Repport }) {
     const [isDialogSupportOpen, setIsDialogSupportOpen] = useState(false);
+    const [isDialogEditRepportOpen, setIsDialogEditRepportOpen] = useState(false);
+
+    // Untuk Toast Notification
+    const { flash } = usePage<PageProps>().props;
+    useEffect(() => {
+        if (flash?.success) {
+            toast.success(flash.success);
+        }
+        if (flash?.error) {
+            toast.error(flash.error);
+        }
+    }, [flash]);
 
     //Breadcrumb
     const breadcrumbs: BreadcrumbItem[] = [
@@ -38,6 +56,19 @@ export default function DetailRepportPage({ repport }: { repport: Repport }) {
             href: '#',
         },
     ];
+
+    const editStatusForm = useForm<RepportUpdateStatusValidationSchema>({
+        resolver: zodResolver(repportUpdateStatusValidationSchema),
+        defaultValues: {
+            status: repport.status,
+        },
+    });
+
+    const onSubmitEditStatus = (values: RepportUpdateStatusValidationSchema) => {
+        router.put(`/repports/${repport.id}`, values);
+        setIsDialogEditRepportOpen(false);
+        editStatusForm.reset();
+    };
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
@@ -156,7 +187,9 @@ export default function DetailRepportPage({ repport }: { repport: Repport }) {
                                 </div>
 
                                 <div className="mt-4 space-y-3">
-                                    <Button className="w-full bg-blue-500 py-5">Edit Laporan</Button>
+                                    <Button className="w-full bg-blue-500 py-5" onClick={() => setIsDialogEditRepportOpen(true)}>
+                                        Edit Laporan
+                                    </Button>
                                     <Button className="w-full py-5" variant={'destructive'} disabled>
                                         Hapus Laporan
                                     </Button>
@@ -167,6 +200,13 @@ export default function DetailRepportPage({ repport }: { repport: Repport }) {
                 </div>
 
                 <DialogRepportSupport isDialogOpen={isDialogSupportOpen} setIsDialogOpen={setIsDialogSupportOpen} repport={repport} />
+                <DialogEditRepport
+                    isDialogOpen={isDialogEditRepportOpen}
+                    setIsDialogOpen={setIsDialogEditRepportOpen}
+                    repport={repport}
+                    form={editStatusForm}
+                    onSubmit={onSubmitEditStatus}
+                />
             </section>
         </AppLayout>
     );

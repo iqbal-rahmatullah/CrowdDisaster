@@ -8,5 +8,6 @@ Route::middleware(['auth', 'verified'])->prefix('repports')->group(function () {
         Route::get('/map', 'indexRepportMap')->name('repports.map');
         Route::get('/{repport}', 'showRepport')->name('repports.show');
         Route::get('/', 'index')->name('repports.index');
+        Route::put('/{repport}', 'editStatusRepport')->name('repports.edit.status');
     });
 });
