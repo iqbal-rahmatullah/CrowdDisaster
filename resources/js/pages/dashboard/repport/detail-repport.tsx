@@ -1,3 +1,4 @@
+import { DialogDeleteRepport } from '@/components/repport/DialogDeleteRepport';
 import { DialogEditRepport } from '@/components/repport/DialogEditRepport';
 import { DialogRepportSupport } from '@/components/repport/DialogRepportSupport';
 import { Badge } from '@/components/ui/badge';
@@ -29,6 +30,7 @@ import { toast } from 'sonner';
 export default function DetailRepportPage({ repport }: { repport: Repport }) {
     const [isDialogSupportOpen, setIsDialogSupportOpen] = useState(false);
     const [isDialogEditRepportOpen, setIsDialogEditRepportOpen] = useState(false);
+    const [isDialogDeleteRepportOpen, setIsDialogDeleteRepportOpen] = useState(false);
 
     // Untuk Toast Notification
     const { flash } = usePage<PageProps>().props;
@@ -68,6 +70,10 @@ export default function DetailRepportPage({ repport }: { repport: Repport }) {
         router.put(`/repports/${repport.id}`, values);
         setIsDialogEditRepportOpen(false);
         editStatusForm.reset();
+    };
+
+    const onDeleteRepport = () => {
+        router.delete(`/repports/${repport.id}`);
     };
 
     return (
@@ -190,7 +196,7 @@ export default function DetailRepportPage({ repport }: { repport: Repport }) {
                                     <Button className="w-full bg-blue-500 py-5" onClick={() => setIsDialogEditRepportOpen(true)}>
                                         Edit Laporan
                                     </Button>
-                                    <Button className="w-full py-5" variant={'destructive'} disabled>
+                                    <Button className="w-full py-5" variant={'destructive'} onClick={() => setIsDialogDeleteRepportOpen(true)}>
                                         Hapus Laporan
                                     </Button>
                                 </div>
@@ -206,6 +212,11 @@ export default function DetailRepportPage({ repport }: { repport: Repport }) {
                     repport={repport}
                     form={editStatusForm}
                     onSubmit={onSubmitEditStatus}
+                />
+                <DialogDeleteRepport
+                    isDialogOpen={isDialogDeleteRepportOpen}
+                    setIsDialogOpen={setIsDialogDeleteRepportOpen}
+                    onDelete={onDeleteRepport}
                 />
             </section>
         </AppLayout>

@@ -9,5 +9,6 @@ Route::middleware(['auth', 'verified'])->prefix('repports')->group(function () {
         Route::get('/{repport}', 'showRepport')->name('repports.show');
         Route::get('/', 'index')->name('repports.index');
         Route::put('/{repport}', 'editStatusRepport')->name('repports.edit.status');
+        Route::delete('/{repport}', 'delete')->name('repports.delete');
     });
 });

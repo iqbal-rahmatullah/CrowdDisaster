@@ -61,4 +61,19 @@ class RepportController extends Controller
             ]);
         }
     }
+
+    public function delete(Repport $repport)
+    {
+        try {
+            $repport->delete();
+
+            return redirect()->back()->with([
+                'success' => 'Laporan Berhasil Dihapus',
+            ]);
+        } catch (\Exception $e) {
+            return redirect()->back()->with([
+                'error' => 'Laporan Gagal Dihapus',
+            ]);
+        }
+    }
 }
