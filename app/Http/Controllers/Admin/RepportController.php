@@ -3,10 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\RepportCommentRequest;
 use App\Models\DisasterPosts;
 use App\Models\Repport;
+use App\Models\RepportCommentProof;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
+use Illuminate\Support\Str;
 
 class RepportController extends Controller
 {
@@ -38,7 +42,8 @@ class RepportController extends Controller
         return Inertia::render('dashboard/repport/detail-repport', [
             'repport' => $repport->load([
                 'repportProofs',
-                'repportComments',
+                'repportComments.user',
+                'repportComments.proofs',
                 'repportImpacts',
                 'repportSupports.user',
             ]),
@@ -73,6 +78,41 @@ class RepportController extends Controller
         } catch (\Exception $e) {
             return redirect()->back()->with([
                 'error' => 'Laporan Gagal Dihapus',
+            ]);
+        }
+    }
+
+    public function addComment(RepportCommentRequest $request, Repport $repport)
+    {
+        try {
+            $validate = $request->validated();
+
+            $commentCreated = $repport->repportComments()->create([
+                'user_id' => Auth::user()->id,
+                'comment' => $validate['comment'],
+            ]);
+
+            if (isset($validate['proof'])) {
+                foreach ($validate['proof'] as $file) {
+                    $extension = $file->getClientOriginalExtension();
+                    $filename = Str::uuid() . '.' . $extension;
+                    $imagePath = $file->storeAs('comment_proof', $filename, 'public');
+
+                    RepportCommentProof::create([
+                        'repport_comment_id' => $commentCreated->id,
+                        'file_path' => $imagePath,
+                        'file_type' => 'image',
+                    ]);
+                }
+            }
+
+
+            return redirect()->back()->with([
+                'success' => 'Komentar Berhasil Ditambahkan',
+            ]);
+        } catch (\Exception $e) {
+            return redirect()->back()->with([
+                'error' => 'Komentar Gagal Ditambahkan',
             ]);
         }
     }

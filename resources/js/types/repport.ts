@@ -49,10 +49,19 @@ export interface RepportImpact {
     updated_at: string;
 }
 
+export interface RepportCommentProof {
+    id: number;
+    repport_comment_id: number;
+    file_path: string;
+    file_type: ReportFileType;
+}
+
 export interface RepportComment {
     id: number;
     repport_id: number;
     user_id: number;
+    user: User;
+    proofs: RepportCommentProof[];
     comment: string;
     created_at: string;
     updated_at: string;

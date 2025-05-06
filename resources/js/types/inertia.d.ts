@@ -1,4 +1,5 @@
 import { PageProps as InertiaPageProps } from '@inertiajs/inertia';
+import { User } from '.';
 
 export interface FlashProps {
     success?: string;
@@ -7,4 +8,7 @@ export interface FlashProps {
 
 export interface PageProps extends InertiaPageProps {
     flash: FlashProps;
+    auth: {
+        user: User;
+    };
 }

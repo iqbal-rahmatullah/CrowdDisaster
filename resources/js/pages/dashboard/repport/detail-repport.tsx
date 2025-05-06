@@ -1,11 +1,17 @@
 import { DialogDeleteRepport } from '@/components/repport/DialogDeleteRepport';
 import { DialogEditRepport } from '@/components/repport/DialogEditRepport';
 import { DialogRepportSupport } from '@/components/repport/DialogRepportSupport';
+import { DialogShowCommentRepport } from '@/components/repport/DialogShowCommentRepport';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
-import { repportUpdateStatusValidationSchema, RepportUpdateStatusValidationSchema } from '@/components/validation/repport';
+import {
+    repportAddCommentValidationSchema,
+    RepportAddCommentValidationSchema,
+    repportUpdateStatusValidationSchema,
+    RepportUpdateStatusValidationSchema,
+} from '@/components/validation/repport';
 import AppLayout from '@/layouts/app-layout';
 import { convertToIndonesianDate } from '@/lib/utils/convertTime';
 import { BreadcrumbItem } from '@/types';
@@ -31,6 +37,7 @@ export default function DetailRepportPage({ repport }: { repport: Repport }) {
     const [isDialogSupportOpen, setIsDialogSupportOpen] = useState(false);
     const [isDialogEditRepportOpen, setIsDialogEditRepportOpen] = useState(false);
     const [isDialogDeleteRepportOpen, setIsDialogDeleteRepportOpen] = useState(false);
+    const [isDialogShowCommentOpen, setIsDialogShowCommentOpen] = useState(false);
 
     // Untuk Toast Notification
     const { flash } = usePage<PageProps>().props;
@@ -66,10 +73,32 @@ export default function DetailRepportPage({ repport }: { repport: Repport }) {
         },
     });
 
+    const commentRepportForm = useForm<RepportAddCommentValidationSchema>({
+        resolver: zodResolver(repportAddCommentValidationSchema),
+        defaultValues: {
+            comment: '',
+        },
+    });
+
     const onSubmitEditStatus = (values: RepportUpdateStatusValidationSchema) => {
         router.put(`/repports/${repport.id}`, values);
         setIsDialogEditRepportOpen(false);
         editStatusForm.reset();
+    };
+
+    const onSubmitComment = (values: RepportAddCommentValidationSchema) => {
+        const formData = new FormData();
+        formData.append('comment', values.comment);
+        if (values.proof) {
+            values.proof.forEach((file) => {
+                formData.append('proof[]', file);
+            });
+        }
+        router.post(`/repports/${repport.id}/comment`, formData, {
+            forceFormData: true,
+        });
+
+        commentRepportForm.reset();
     };
 
     const onDeleteRepport = () => {
@@ -164,7 +193,7 @@ export default function DetailRepportPage({ repport }: { repport: Repport }) {
                                         <p className="text-xs font-medium">{repport.repport_comments.length} komentar</p>
                                     </div>
                                     <div className="flex w-2/12 justify-end">
-                                        <Button variant={'ghost'}>
+                                        <Button variant={'ghost'} onClick={() => setIsDialogShowCommentOpen(true)}>
                                             <ArrowRight className="h-4 w-4" />
                                         </Button>
                                     </div>
@@ -217,6 +246,13 @@ export default function DetailRepportPage({ repport }: { repport: Repport }) {
                     isDialogOpen={isDialogDeleteRepportOpen}
                     setIsDialogOpen={setIsDialogDeleteRepportOpen}
                     onDelete={onDeleteRepport}
+                />
+                <DialogShowCommentRepport
+                    isDialogOpen={isDialogShowCommentOpen}
+                    setIsDialogOpen={setIsDialogShowCommentOpen}
+                    repport={repport}
+                    form={commentRepportForm}
+                    onSubmit={onSubmitComment}
                 />
             </section>
         </AppLayout>

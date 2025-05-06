@@ -24,4 +24,9 @@ class RepportComment extends Model
     {
         return $this->belongsTo(Repport::class);
     }
+
+    public function proofs()
+    {
+        return $this->hasMany(RepportCommentProof::class);
+    }
 }
