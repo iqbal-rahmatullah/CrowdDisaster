@@ -18,7 +18,6 @@ class DisasterPostController extends Controller
         return Inertia::render('dashboard/post-disaster/index', [
             'allDisasterPost' => DisasterPosts::with([
                 'disasterPostsProof',
-                'disasterPostsRefugees',
             ])->get(),
         ]);
     }
@@ -28,6 +27,7 @@ class DisasterPostController extends Controller
         return Inertia::render('dashboard/post-disaster/detail-post', [
             'disasterPost' => $disasterPost->load([
                 'disasterPostsProof',
+                'disasterPostsRefugees',
             ]),
         ]);
     }

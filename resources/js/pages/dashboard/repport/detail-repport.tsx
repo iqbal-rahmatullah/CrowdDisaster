@@ -15,12 +15,11 @@ import {
 import AppLayout from '@/layouts/app-layout';
 import { convertToIndonesianDate } from '@/lib/utils/convertTime';
 import { BreadcrumbItem } from '@/types';
-import { PageProps } from '@/types/inertia';
 import { GetRepportStatusBackground, GetRepportStatusLabel, GetRepportTypeLabel, Repport } from '@/types/repport';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Head, router, usePage } from '@inertiajs/react';
+import { Head, router } from '@inertiajs/react';
 import { ArrowRight } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import {
     HiCalendar,
@@ -31,24 +30,12 @@ import {
     HiOutlineTrendingDown,
     HiOutlineUserCircle,
 } from 'react-icons/hi';
-import { toast } from 'sonner';
 
 export default function DetailRepportPage({ repport }: { repport: Repport }) {
     const [isDialogSupportOpen, setIsDialogSupportOpen] = useState(false);
     const [isDialogEditRepportOpen, setIsDialogEditRepportOpen] = useState(false);
     const [isDialogDeleteRepportOpen, setIsDialogDeleteRepportOpen] = useState(false);
     const [isDialogShowCommentOpen, setIsDialogShowCommentOpen] = useState(false);
-
-    // Untuk Toast Notification
-    const { flash } = usePage<PageProps>().props;
-    useEffect(() => {
-        if (flash?.success) {
-            toast.success(flash.success);
-        }
-        if (flash?.error) {
-            toast.error(flash.error);
-        }
-    }, [flash]);
 
     //Breadcrumb
     const breadcrumbs: BreadcrumbItem[] = [

@@ -1,3 +1,4 @@
+import { DialogShowDetailRefugee } from '@/components/disaster-post/DialogShowDetailRefugee';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
@@ -6,6 +7,7 @@ import { BreadcrumbItem } from '@/types';
 import { DisasterPost } from '@/types/disaster-post';
 import { Head } from '@inertiajs/react';
 import { ArrowRight } from 'lucide-react';
+import { useState } from 'react';
 import { HiLocationMarker, HiOutlineTrendingDown, HiOutlineUserCircle, HiPhone } from 'react-icons/hi';
 
 interface DetailPostDisasterPageProps {
@@ -13,6 +15,8 @@ interface DetailPostDisasterPageProps {
 }
 
 export default function DetailPostDisasterPage({ disasterPost }: DetailPostDisasterPageProps) {
+    const [isShowDetailRefugee, setIsShowDetailRefugee] = useState(false);
+
     const breadcrumbs: BreadcrumbItem[] = [
         {
             title: 'Dashboard',
@@ -27,6 +31,8 @@ export default function DetailPostDisasterPage({ disasterPost }: DetailPostDisas
             href: '#',
         },
     ];
+
+    console.log(disasterPost);
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
@@ -93,10 +99,12 @@ export default function DetailPostDisasterPage({ disasterPost }: DetailPostDisas
                                 <div className="flex justify-between gap-x-2">
                                     <div className="flex w-10/12 items-center gap-x-2">
                                         <HiOutlineUserCircle className="text-primary text-lg" />
-                                        <p className="text-xs font-medium">0 / {disasterPost.quota} orang</p>
+                                        <p className="text-xs font-medium">
+                                            {disasterPost.disaster_posts_refugees.length} / {disasterPost.quota} orang
+                                        </p>
                                     </div>
                                     <div className="flex w-2/12 justify-end">
-                                        <Button variant={'ghost'}>
+                                        <Button variant={'ghost'} onClick={() => setIsShowDetailRefugee(true)}>
                                             <ArrowRight className="h-4 w-4" />
                                         </Button>
                                     </div>
@@ -124,6 +132,8 @@ export default function DetailPostDisasterPage({ disasterPost }: DetailPostDisas
                     </div>
                 </div>
             </section>
+
+            <DialogShowDetailRefugee isDialogOpen={isShowDetailRefugee} setIsDialogOpen={setIsShowDetailRefugee} disasterPost={disasterPost} />
         </AppLayout>
     );
 }

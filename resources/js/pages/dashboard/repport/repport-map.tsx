@@ -10,18 +10,16 @@ import { getRadiusColor } from '@/lib/utils/getRadiusColor';
 import { useGetAddress } from '@/services/use-get-address';
 import { BreadcrumbItem } from '@/types';
 import { DisasterPost } from '@/types/disaster-post';
-import { PageProps } from '@/types/inertia';
 import { Location } from '@/types/location';
 import { Repport } from '@/types/repport';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { Head, router, usePage } from '@inertiajs/react';
+import { Head, router } from '@inertiajs/react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Circle, MapContainer, Marker, Popup, TileLayer, useMapEvents } from 'react-leaflet';
-import { toast } from 'sonner';
 
 //Breadcrumb
 const breadcrumbs: BreadcrumbItem[] = [
@@ -43,17 +41,6 @@ interface RepportMapPageProps {
 }
 
 export default function RepportMapPage({ allRepports, allDisasterPost }: RepportMapPageProps) {
-    const { flash } = usePage<PageProps>().props;
-
-    useEffect(() => {
-        if (flash?.success) {
-            toast.success(flash.success);
-        }
-        if (flash?.error) {
-            toast.error(flash.error);
-        }
-    }, [flash]);
-
     const LocationMarker = () => {
         const [isDialogOpen, setIsDialogOpen] = useState(false);
         const form = useForm<AddDisasterPostValidationSchema>({
