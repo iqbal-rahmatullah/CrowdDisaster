@@ -1,13 +1,17 @@
+import { DialoagPostProgression } from '@/components/disaster-post/DialogPostProgression';
 import { DialogShowDetailRefugee } from '@/components/disaster-post/DialogShowDetailRefugee';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
+import { DisasterPostAddProgressionValidation, disasterPostAddProgressionValidationSchema } from '@/components/validation/disaster-post-progression';
 import AppLayout from '@/layouts/app-layout';
 import { BreadcrumbItem } from '@/types';
 import { DisasterPost } from '@/types/disaster-post';
-import { Head } from '@inertiajs/react';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Head, router } from '@inertiajs/react';
 import { ArrowRight } from 'lucide-react';
 import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { HiLocationMarker, HiOutlineTrendingDown, HiOutlineUserCircle, HiPhone } from 'react-icons/hi';
 
 interface DetailPostDisasterPageProps {
@@ -16,6 +20,30 @@ interface DetailPostDisasterPageProps {
 
 export default function DetailPostDisasterPage({ disasterPost }: DetailPostDisasterPageProps) {
     const [isShowDetailRefugee, setIsShowDetailRefugee] = useState(false);
+    const [isShowDetailProgression, setIsShowDetailProgression] = useState(false);
+
+    const formAddProgression = useForm({
+        resolver: zodResolver(disasterPostAddProgressionValidationSchema),
+        defaultValues: {
+            progression: '',
+            proof: [],
+        },
+    });
+
+    const onSubmitProgression = (data: DisasterPostAddProgressionValidation) => {
+        const formData = new FormData();
+        formData.append('progression', data.progression);
+        if (data.proof) {
+            data.proof.forEach((file) => {
+                formData.append('proof[]', file);
+            });
+        }
+        router.post(`/disaster-posts/${disasterPost.id}/progression`, formData, {
+            forceFormData: true,
+        });
+
+        formAddProgression.reset();
+    };
 
     const breadcrumbs: BreadcrumbItem[] = [
         {
@@ -112,10 +140,10 @@ export default function DetailPostDisasterPage({ disasterPost }: DetailPostDisas
                                 <div className="flex justify-between gap-x-2">
                                     <div className="flex w-10/12 items-center gap-x-2">
                                         <HiOutlineTrendingDown className="text-lg text-yellow-400" />
-                                        <p className="text-xs font-medium">0 Perkembangan</p>
+                                        <p className="text-xs font-medium">{disasterPost.disaster_posts_progression.length} Perkembangan</p>
                                     </div>
                                     <div className="flex w-2/12 justify-end">
-                                        <Button variant={'ghost'}>
+                                        <Button variant={'ghost'} onClick={() => setIsShowDetailProgression(true)}>
                                             <ArrowRight className="h-4 w-4" />
                                         </Button>
                                     </div>
@@ -134,6 +162,13 @@ export default function DetailPostDisasterPage({ disasterPost }: DetailPostDisas
             </section>
 
             <DialogShowDetailRefugee isDialogOpen={isShowDetailRefugee} setIsDialogOpen={setIsShowDetailRefugee} disasterPost={disasterPost} />
+            <DialoagPostProgression
+                isDialogOpen={isShowDetailProgression}
+                setIsDialogOpen={setIsShowDetailProgression}
+                progression={disasterPost.disaster_posts_progression}
+                form={formAddProgression}
+                onSubmit={onSubmitProgression}
+            />
         </AppLayout>
     );
 }

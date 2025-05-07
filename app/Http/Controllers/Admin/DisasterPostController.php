@@ -28,6 +28,8 @@ class DisasterPostController extends Controller
             'disasterPost' => $disasterPost->load([
                 'disasterPostsProof',
                 'disasterPostsRefugees',
+                'disasterPostsProgression.proof',
+                'disasterPostsProgression.user'
             ]),
         ]);
     }

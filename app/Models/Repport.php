@@ -29,7 +29,7 @@ class Repport extends Model
 
     public function repportComments()
     {
-        return $this->hasMany(RepportComment::class);
+        return $this->hasMany(RepportComment::class)->orderBy('updated_at', 'desc');
     }
 
     public function repportImpacts()

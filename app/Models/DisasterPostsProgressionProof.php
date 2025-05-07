@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class DisasterPostsProgressionProof extends Model
 {
     protected $fillable = [
-        'disaster_posts_progression_id',
+        'disaster_posts_progressions_id',
         'file_path',
         'file_type',
     ];

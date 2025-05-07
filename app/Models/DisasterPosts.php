@@ -21,7 +21,7 @@ class DisasterPosts extends Model
 
     public function disasterPostsProgression()
     {
-        return $this->hasMany(DisasterPostsProgression::class);
+        return $this->hasMany(DisasterPostsProgression::class, 'disaster_post_id')->orderBy('updated_at', 'desc');
     }
 
     public function disasterPostsProof()
