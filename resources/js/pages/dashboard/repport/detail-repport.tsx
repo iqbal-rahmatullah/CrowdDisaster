@@ -6,12 +6,8 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
-import {
-    repportAddCommentValidationSchema,
-    RepportAddCommentValidationSchema,
-    repportUpdateStatusValidationSchema,
-    RepportUpdateStatusValidationSchema,
-} from '@/components/validation/repport';
+import { repportUpdateStatusValidationSchema, RepportUpdateStatusValidationSchema } from '@/components/validation/repport';
+import { repportAddCommentValidationSchema, RepportAddCommentValidationSchema } from '@/components/validation/repport-comment';
 import AppLayout from '@/layouts/app-layout';
 import { convertToIndonesianDate } from '@/lib/utils/convertTime';
 import { BreadcrumbItem } from '@/types';
