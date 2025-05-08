@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\DisasterPosts;
 use App\Models\Repport;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -17,6 +18,7 @@ class DashboardController extends Controller
             [
                 'repportCount' => Repport::count(),
                 'userCount' => User::count(),
+                'disasterPostCount' => DisasterPosts::count(),
                 'allRepports' => Repport::all(),
             ]
         );

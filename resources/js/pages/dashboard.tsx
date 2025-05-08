@@ -17,17 +17,18 @@ const breadcrumbs: BreadcrumbItem[] = [
 export interface DashboardProps {
     repportCount: number;
     userCount: number;
+    disasterPostCount: number;
     allRepports: Repport[];
 }
 
-export default function Dashboard({ repportCount, userCount, allRepports }: DashboardProps) {
+export default function Dashboard({ repportCount, userCount, allRepports, disasterPostCount }: DashboardProps) {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Dashboard" />
             <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
                 <div className="grid auto-rows-min gap-4 md:grid-cols-3">
                     <CardStatisticDashboard title={'Jumlah Bencana'} value={repportCount} icon={ChartArea} />
-                    <CardStatisticDashboard title={'Jumlah Posko Bencana'} value={0} icon={House} />
+                    <CardStatisticDashboard title={'Jumlah Posko Bencana'} value={disasterPostCount} icon={House} />
                     <CardStatisticDashboard title={'Jumlah Pengguna'} value={userCount} icon={User} />
                 </div>
                 <div className="flex flex-col gap-x-0 gap-y-5 md:flex-row md:gap-x-5 md:gap-y-0">

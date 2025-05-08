@@ -30,5 +30,13 @@ export const RepportChartByType = ({ allRepports }: { allRepports: Repport[] }) 
 
     ChartJS.register(ArcElement, Tooltip, Legend);
 
+    if (allRepports.length == 0) {
+        return (
+            <div className="h-auto w-full items-center justify-center py-64">
+                <h6 className="text-center">Belum ada laporan yang terjadi</h6>
+            </div>
+        );
+    }
+
     return <Pie data={data} options={options} />;
 };
