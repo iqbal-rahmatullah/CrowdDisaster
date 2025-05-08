@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\HomePageController;
+use App\Http\Controllers\Api\RepportController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -22,5 +23,25 @@ Route::middleware('auth:api')->group(function () {
         Route::get('/laporan/terdekat/{latitude}/{longitude}', 'laporanTerdekat');
         // Route::get('/notif/user', 'notifUser');
         // Route::post('/patch/notif/{id}', 'notifUserPatch');
+    });
+
+    Route::controller(RepportController::class)->group(function () {
+        Route::get('/laporan/{id}', 'getLaporan');
+        Route::post('/laporan/{id}/report', 'laporanReport');
+        Route::post('/laporan/beri-dukungan/{id}/{lat}/{long}', 'beriDukungan');
+
+        Route::post('/laporan/comment/{id}', 'commentLaporan');
+        Route::post('/laporan/comment/{id}/delete', 'deleteCommentLaporan');
+        Route::post('/laporan/comment/{id}/update', 'updateCommentLaporan');
+
+        Route::get('/laporan/laporan-umum/{lat}/{long}/{status}', 'laporanUmum');
+
+        Route::get('/laporan/laporan-anda/{status}', 'laporanAnda');
+
+        Route::get('/laporan/diseluruh/dunia', 'allLaporan');
+
+        Route::post('/laporan/buat-laporan/{lat}/{long}', 'buatLaporan');
+
+        Route::get('/laporan/convert-alamat/{lat}/{long}', 'convertAlamat');
     });
 });

@@ -34,7 +34,7 @@ class Repport extends Model
 
     public function repportImpacts()
     {
-        return $this->hasMany(RepportImpact::class);
+        return $this->hasMany(RepportImpact::class)->orderBy('updated_at', 'desc');
     }
 
     public function user()
@@ -45,5 +45,10 @@ class Repport extends Model
     public function repportSupports()
     {
         return $this->hasMany(RepportSupport::class);
+    }
+
+    public function problemRepport()
+    {
+        return $this->hasMany(ProblemRepport::class)->orderBy('updated_at', 'desc');
     }
 }

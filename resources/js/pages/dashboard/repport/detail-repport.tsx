@@ -101,14 +101,14 @@ export default function DetailRepportPage({ repport }: { repport: Repport }) {
                                         <CarouselItem key={repport.id} className="h-[600px] w-full">
                                             {repport.file_type === 'image' ? (
                                                 <img
-                                                    src={`/img/dummy/${repport.file_path}`}
+                                                    src={`/storage/${repport.file_path}`}
                                                     alt={repport.file_path}
                                                     className="h-full w-full rounded-lg object-cover"
                                                 />
                                             ) : repport.file_type === 'video' ? (
                                                 <div className="video-wrapper h-full w-full">
                                                     <video
-                                                        src={'/video/dummy/' + repport.file_path}
+                                                        src={'/storage/' + repport.file_path}
                                                         title={`${repport.file_path}`}
                                                         className="h-full w-full rounded-lg object-cover"
                                                         autoPlay

@@ -16,7 +16,7 @@ class ConvertAlamatService
             return $cachedAddress;
         }
 
-        $apiUrl = "https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat={$latitude}&lon={$longitude}";
+        $apiUrl = "https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat={$latitude}&lon={$longitude}&accept-language=en";
 
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $apiUrl);
@@ -28,6 +28,7 @@ class ConvertAlamatService
 
         $data = json_decode($response, true);
         $alamat = $data['display_name'] ?? '';
+
 
         Cache::put($cacheKey, $alamat, now()->addDay());
 
