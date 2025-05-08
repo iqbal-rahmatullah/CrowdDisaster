@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Auth\LoginRequest;
+
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
@@ -65,5 +65,15 @@ class AuthController extends Controller
                 'error' => $e->getMessage(),
             ], 500);
         }
+    }
+
+    public function logout()
+    {
+        Auth::guard('api')->logout();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Successfully logged out',
+        ], 200);
     }
 }
