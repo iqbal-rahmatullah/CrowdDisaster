@@ -72,7 +72,7 @@ class RepportController extends Controller
         try {
             $repport->delete();
 
-            return redirect()->back()->with([
+            return redirect()->route('repports.index')->with([
                 'success' => 'Laporan Berhasil Dihapus',
             ]);
         } catch (\Exception $e) {

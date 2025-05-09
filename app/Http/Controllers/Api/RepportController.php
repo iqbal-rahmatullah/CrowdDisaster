@@ -115,12 +115,10 @@ class RepportController extends Controller
         }
     }
 
-    public function laporanReport($id, Request $request)
+    public function laporanReport($id, $lat, $long, Request $request)
     {
         $validator = Validator::make($request->all(), [
             'pesan_report' => 'required|string',
-            'latitude' => 'required|string',
-            'longitude' => 'required|string',
         ]);
 
         if ($validator->fails()) {
@@ -143,8 +141,8 @@ class RepportController extends Controller
 
             $latFrom = deg2rad(floatval($laporan->latitude));
             $longFrom = deg2rad(floatval($laporan->longitude));
-            $latTo = deg2rad(floatval($request->latitude));
-            $longTo = deg2rad(floatval($request->longitude));
+            $latTo = deg2rad(floatval($lat));
+            $longTo = deg2rad(floatval($long));
 
             $latDelta = $latTo - $latFrom;
             $longDelta = $longTo - $longFrom;

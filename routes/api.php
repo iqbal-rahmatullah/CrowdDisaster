@@ -28,7 +28,7 @@ Route::middleware('auth:api')->group(function () {
 
     Route::controller(RepportController::class)->group(function () {
         Route::get('/laporan/{id}', 'getLaporan');
-        Route::post('/laporan/{id}/report', 'laporanReport');
+        Route::post('/laporan/{id}/report/{lat}/{long}', 'laporanReport');
         Route::post('/laporan/beri-dukungan/{id}/{lat}/{long}', 'beriDukungan');
 
         Route::post('/laporan/comment/{id}', 'commentLaporan');
