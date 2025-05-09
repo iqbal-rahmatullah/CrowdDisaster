@@ -619,7 +619,8 @@ class RepportController extends Controller
             ]);
 
             $destinationPath = 'disaster_images/';
-            foreach ($request->bukti_laporan as $file) {
+            foreach ($request->bukti_laporan as $bukti) {
+                $file = $bukti['bukti_laporan'];
                 $extension = $file->getClientOriginalExtension();
                 $buktiLaporanName = Str::uuid() . '.' . $extension;
 

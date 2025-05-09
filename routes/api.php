@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\HomePageController;
+use App\Http\Controllers\Api\PostDisasterController;
 use App\Http\Controllers\Api\RepportController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -43,5 +44,10 @@ Route::middleware('auth:api')->group(function () {
         Route::post('/laporan/buat-laporan/{lat}/{long}', 'buatLaporan');
 
         Route::get('/laporan/convert-alamat/{lat}/{long}', 'convertAlamat');
+    });
+
+    Route::controller(PostDisasterController::class)->prefix('post-disaster')->group(function () {
+        Route::get('/', 'show');
+        Route::get('/{id}', 'showById');
     });
 });
