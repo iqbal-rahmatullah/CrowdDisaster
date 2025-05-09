@@ -81,6 +81,8 @@ class RepportController extends Controller
                 'data' => [
                     'id' => $laporan->id,
                     'judul_laporan' => $laporan->title,
+                    'type' => $laporan->type,
+                    'radius' => $laporan->radius,
                     'deskripsi_laporan' => $laporan->description,
                     'alamat_laporan' => $laporan->address ? $laporan->address : null,
                     'status_laporan' => $laporan->status,
@@ -98,6 +100,8 @@ class RepportController extends Controller
                 'data' => [
                     'id' => $laporan->id,
                     'judul_laporan' => $laporan->title,
+                    'type' => $laporan->type,
+                    'radius' => $laporan->radius,
                     'deskripsi_laporan' => $laporan->description,
                     'alamat_laporan' => $laporan->address ? $laporan->address : null,
                     'status_laporan' => $laporan->status,
@@ -530,6 +534,7 @@ class RepportController extends Controller
                 'image_laporan' => $imagePath,
                 'status_laporan' => $laporan->status,
                 'radius' => $laporan->radius,
+                'type' => $laporan->type,
                 'alamat_laporan' => $laporan->address ? $laporan->address : null,
                 'pendukung' => $laporan->repportSupports ? $laporan->repportSupports->count() : 0,
             ];
@@ -616,6 +621,7 @@ class RepportController extends Controller
                 'longitude' => $request->long,
                 'radius' => $request->radius,
                 'type' => $request->type,
+                'status' => auth()->user()->role == "rt" ? 'need_responsible' : 'need_support',
             ]);
 
             $destinationPath = 'disaster_images/';
