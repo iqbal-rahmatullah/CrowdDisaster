@@ -77,7 +77,7 @@ export interface Repport {
     type: RepportType;
     status: RepportStatus;
     radius: number;
-    additional_information: string;
+    additional_information?: string;
     created_at: string;
     updated_at: string;
     repport_proofs: RepportProof[];

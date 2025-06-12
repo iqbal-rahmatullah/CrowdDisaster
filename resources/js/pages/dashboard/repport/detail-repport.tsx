@@ -19,6 +19,7 @@ import { Head, router } from '@inertiajs/react';
 import { ArrowRight } from 'lucide-react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { FaNotesMedical } from 'react-icons/fa6';
 import {
     HiCalendar,
     HiChatAlt,
@@ -156,6 +157,21 @@ export default function DetailRepportPage({ repport }: { repport: Repport }) {
                                     <HiCalendar className="text-primary text-lg" />
                                     <p className="text-xs font-medium">{convertToIndonesianDate(new Date(repport.created_at).toLocaleString())}</p>
                                 </div>
+                                {repport.additional_information != null && (
+                                    <div className="mt-4 flex items-center gap-x-2">
+                                        <FaNotesMedical className="text-primary text-lg" />
+                                        <div>
+                                            {(() => {
+                                                const additionalInfo = JSON.parse(repport.additional_information);
+                                                return Object.entries(additionalInfo).map(([key, value], index) => (
+                                                    <p key={index} className="text-xs font-medium">
+                                                        <strong>{key}:</strong> {value as string}
+                                                    </p>
+                                                ));
+                                            })()}
+                                        </div>
+                                    </div>
+                                )}
                                 <h3 className="mt-5 text-lg font-bold">Deskripsi</h3>
                                 <p className="text-muted-foreground mt-2 text-sm">{repport.description}</p>
                             </CardContent>

@@ -12,6 +12,7 @@ use App\Models\RepportSupport;
 use App\Services\ConvertAlamatService;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
@@ -91,6 +92,7 @@ class RepportController extends Controller
                     'is_memberi_dukungan' => true,
                     'bukti_laporan' => $buktiLaporan,
                     'comments' => $comments,
+                    'additional_information' => $laporan->additional_information ? json_decode($laporan->additional_information, true) : null,
                 ]
             ]);
         } else {
@@ -110,6 +112,7 @@ class RepportController extends Controller
                     'is_memberi_dukungan' => false,
                     'bukti_laporan' => $buktiLaporan,
                     'comments' => $comments,
+                    'additional_information' => $laporan->additional_information ? json_decode($laporan->additional_information) : null,
                 ]
             ]);
         }
@@ -579,6 +582,7 @@ class RepportController extends Controller
             'lat' => 'required|numeric',
             'type' => 'required|string',
             'long' => 'required|numeric',
+            'additional_information' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -620,6 +624,7 @@ class RepportController extends Controller
                 'radius' => $request->radius,
                 'type' => $request->type,
                 'status' => auth()->user()->role == "rt" ? 'need_responsible' : 'need_support',
+                'additional_information' => json_encode($request->additional_information),
             ]);
 
             $destinationPath = 'disaster_images/';
@@ -642,6 +647,7 @@ class RepportController extends Controller
                 'message' => 'Berhasil membuat laporan'
             ]);
         } catch (Exception $e) {
+            Log::error('Error creating report: ' . $e->getMessage());
             return response()->json([
                 'success' => false,
                 'message' => $e->getMessage()
