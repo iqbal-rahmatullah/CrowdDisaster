@@ -1,10 +1,10 @@
 import { Repport } from '@/types/repport';
 import { UseFormReturn } from 'react-hook-form';
+import { RepportUpdateStatusValidationSchema } from '../../validation/repport';
 import { Button } from '../ui/button';
 import { Dialog, DialogContent, DialogTitle } from '../ui/dialog';
 import { Form, FormField } from '../ui/form';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
-import { RepportUpdateStatusValidationSchema } from '../validation/repport';
 
 interface DialogEditRepportProps {
     isDialogOpen: boolean;

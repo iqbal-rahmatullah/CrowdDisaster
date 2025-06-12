@@ -1,6 +1,7 @@
 import { getRepportsByType } from '@/lib/utils/getRepportsByType';
 import { Repport } from '@/types/repport';
 import { ArcElement, Chart as ChartJS, ChartOptions, Legend, Tooltip } from 'chart.js';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { Pie } from 'react-chartjs-2';
 
 export const RepportChartByType = ({ allRepports }: { allRepports: Repport[] }) => {
@@ -22,13 +23,29 @@ export const RepportChartByType = ({ allRepports }: { allRepports: Repport[] }) 
     const options: ChartOptions<'pie'> = {
         responsive: true,
         maintainAspectRatio: false,
+
         plugins: {
             legend: { position: 'top' },
             title: { display: true, text: 'Statistik Laporan Bencana' },
+            datalabels: {
+                display: true,
+                color: '#fff',
+                formatter: (value, context) => {
+                    console.log('context', context);
+                    console.log('value', value);
+                    // @ts-expect-error Is possible nul
+                    const total: number = context.dataset.data.reduce((acc, curr) => acc + curr, 0);
+                    const percentage = (value / total) * 100;
+                    return `${percentage.toFixed(2)}%`;
+                },
+                font: {
+                    weight: 'bold',
+                },
+            },
         },
     };
 
-    ChartJS.register(ArcElement, Tooltip, Legend);
+    ChartJS.register(ArcElement, Tooltip, Legend, ChartDataLabels);
 
     if (allRepports.length == 0) {
         return (

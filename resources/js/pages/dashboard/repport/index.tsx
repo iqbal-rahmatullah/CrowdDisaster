@@ -1,4 +1,4 @@
-import { RepportCard } from '@/components/repport/RepportCard';
+import { RepportCard } from '@/components/card/RepportCard';
 import AppLayout from '@/layouts/app-layout';
 import { BreadcrumbItem } from '@/types';
 import { Repport } from '@/types/repport';

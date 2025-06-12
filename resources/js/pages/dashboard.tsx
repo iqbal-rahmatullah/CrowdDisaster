@@ -1,6 +1,6 @@
-import { CardStatisticDashboard } from '@/components/CardStatisticDashboard';
-import { RepportChartByMonth } from '@/components/dashboard/RepportChartByMonth';
-import { RepportChartByType } from '@/components/dashboard/RepportChartByType';
+import { CardStatisticDashboard } from '@/components/card/CardStatisticDashboard';
+import { RepportChartByMonth } from '@/components/chart/RepportChartByMonth';
+import { RepportChartByType } from '@/components/chart/RepportChartByType';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
 import { Repport } from '@/types/repport';

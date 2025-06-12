@@ -1,12 +1,12 @@
-import { DialoagPostProgression } from '@/components/disaster-post/DialogPostProgression';
-import { DialogShowDetailRefugee } from '@/components/disaster-post/DialogShowDetailRefugee';
+import { DialoagPostProgression } from '@/components/dialog/DialogPostProgression';
+import { DialogShowDetailRefugee } from '@/components/dialog/DialogShowDetailRefugee';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
-import { DisasterPostAddProgressionValidation, disasterPostAddProgressionValidationSchema } from '@/components/validation/disaster-post-progression';
 import AppLayout from '@/layouts/app-layout';
 import { BreadcrumbItem } from '@/types';
 import { DisasterPost } from '@/types/disaster-post';
+import { DisasterPostAddProgressionValidation, disasterPostAddProgressionValidationSchema } from '@/validation/disaster-post-progression';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Head, router } from '@inertiajs/react';
 import { ArrowRight } from 'lucide-react';

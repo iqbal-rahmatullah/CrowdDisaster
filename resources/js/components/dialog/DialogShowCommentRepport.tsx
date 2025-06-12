@@ -4,12 +4,12 @@ import { usePage } from '@inertiajs/react';
 import { Paperclip, X } from 'lucide-react';
 import { useRef, useState } from 'react';
 import { UseFormReturn } from 'react-hook-form';
+import { RepportAddCommentValidationSchema } from '../../validation/repport-comment';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import { Button } from '../ui/button';
 import { Dialog, DialogContent, DialogTitle } from '../ui/dialog';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '../ui/form';
 import { Textarea } from '../ui/textarea';
-import { RepportAddCommentValidationSchema } from '../validation/repport-comment';
 
 interface DialogShowCommentRepportProps {
     isDialogOpen: boolean;

@@ -2,12 +2,12 @@ import { DisasterPostProgression } from '@/types/disaster-post';
 import { Paperclip, X } from 'lucide-react';
 import { useRef, useState } from 'react';
 import { UseFormReturn } from 'react-hook-form';
+import { DisasterPostAddProgressionValidation } from '../../validation/disaster-post-progression';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import { Button } from '../ui/button';
 import { Dialog, DialogContent, DialogTitle } from '../ui/dialog';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '../ui/form';
 import { Textarea } from '../ui/textarea';
-import { DisasterPostAddProgressionValidation } from '../validation/disaster-post-progression';
 
 interface DialoagPostProgressionProps {
     isDialogOpen: boolean;

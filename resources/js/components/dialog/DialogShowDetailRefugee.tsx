@@ -4,11 +4,11 @@ import { router } from '@inertiajs/react';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { HiPencil, HiTrash, HiUserCircle } from 'react-icons/hi';
-import { DialogDeleteConfirm } from '../shared/DialogDeleteConfirm';
+import { AddDisasterPostRefugeeValidationSchema, disasterPostRefugeeValidationSchema } from '../../validation/disaster-post-refugee';
 import { Button } from '../ui/button';
 import { Dialog, DialogContent, DialogTitle } from '../ui/dialog';
-import { AddDisasterPostRefugeeValidationSchema, disasterPostRefugeeValidationSchema } from '../validation/disaster-post-refugee';
 import { DialogAddRefugee } from './DialogAddRefugee';
+import { DialogDeleteConfirm } from './DialogDeleteConfirm';
 
 interface DialogShowDetailRefugeeProps {
     isDialogOpen: boolean;

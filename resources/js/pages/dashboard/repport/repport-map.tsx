@@ -1,10 +1,9 @@
-import FormAddDisasterPost from '@/components/disaster-post/FormAddDisasterPost';
-import { MarkerDisasterPost } from '@/components/disaster-post/MarkerPostDisaster';
-import { MarkerRepport } from '@/components/repport/MarkerRepport';
+import FormAddDisasterPost from '@/components/form/FormAddDisasterPost';
+import { MarkerDisasterPost } from '@/components/marker/MarkerPostDisaster';
+import { MarkerRepport } from '@/components/marker/MarkerRepport';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { Skeleton } from '@/components/ui/skeleton';
-import { AddDisasterPostValidationSchema, disasterPostValidationSchema } from '@/components/validation/disaster-post';
 import AppLayout from '@/layouts/app-layout';
 import { getRadiusColor } from '@/lib/utils/getRadiusColor';
 import { useGetAddress } from '@/services/use-get-address';
@@ -12,6 +11,7 @@ import { BreadcrumbItem } from '@/types';
 import { DisasterPost } from '@/types/disaster-post';
 import { Location } from '@/types/location';
 import { Repport } from '@/types/repport';
+import { AddDisasterPostValidationSchema, disasterPostValidationSchema } from '@/validation/disaster-post';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { Head, router } from '@inertiajs/react';

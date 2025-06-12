@@ -1,10 +1,10 @@
 import { UseFormReturn } from 'react-hook-form';
+import { AddDisasterPostRefugeeValidationSchema } from '../../validation/disaster-post-refugee';
 import { Button } from '../ui/button';
 import { Dialog, DialogContent, DialogTitle } from '../ui/dialog';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '../ui/form';
 import { Input } from '../ui/input';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
-import { AddDisasterPostRefugeeValidationSchema } from '../validation/disaster-post-refugee';
 
 interface DialogAddRefugeeProps {
     isDialogOpen: boolean;

@@ -1,9 +1,9 @@
 import { UseFormReturn } from 'react-hook-form';
+import { AddDisasterPostValidationSchema } from '../../validation/disaster-post';
 import { Button } from '../ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '../ui/form';
 import { Input } from '../ui/input';
 import { Textarea } from '../ui/textarea';
-import { AddDisasterPostValidationSchema } from '../validation/disaster-post';
 
 interface FormAddDisasterPostProps {
     form: UseFormReturn<AddDisasterPostValidationSchema>;
