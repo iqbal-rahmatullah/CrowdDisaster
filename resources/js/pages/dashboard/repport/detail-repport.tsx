@@ -1,8 +1,9 @@
 import { DialogDeleteRepport } from '@/components/dialog/DialogDeleteRepport';
 import { DialogEditRepport } from '@/components/dialog/DialogEditRepport';
-import { DialogRepportSupport } from '@/components/dialog/DialogRepportSupport';
 import { DialogShowCommentRepport } from '@/components/dialog/DialogShowCommentRepport';
+import { DialogShowProblemReport } from '@/components/dialog/DialogShowProblemReport';
 import { DialogShowReportImpact } from '@/components/dialog/DialogShowReportImpact';
+import { DialogRepportSupport } from '@/components/dialog/DialogShowRepportSupport';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -90,6 +91,8 @@ export default function DetailRepportPage({ repport }: { repport: Repport }) {
     const onDeleteRepport = () => {
         router.delete(`/repports/${repport.id}`);
     };
+
+    console.log('repport', repport);
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
@@ -187,10 +190,10 @@ export default function DetailRepportPage({ repport }: { repport: Repport }) {
                                 <div className="flex justify-between gap-x-2">
                                     <div className="flex w-10/12 items-center gap-x-2">
                                         <HiExclamationCircle className="text-lg text-red-400" />
-                                        <p className="text-xs font-medium">0 melaporkan</p>
+                                        <p className="text-xs font-medium">{repport.problem_repport.length} melaporkan</p>
                                     </div>
                                     <div className="flex w-2/12 justify-end">
-                                        <Button variant={'ghost'}>
+                                        <Button variant={'ghost'} onClick={() => setIsDialogProblemRepportOpen(true)}>
                                             <ArrowRight className="h-4 w-4" />
                                         </Button>
                                     </div>
@@ -239,6 +242,11 @@ export default function DetailRepportPage({ repport }: { repport: Repport }) {
                     repport={repport}
                     form={commentRepportForm}
                     onSubmit={onSubmitComment}
+                />
+                <DialogShowProblemReport
+                    isDialogOpen={isDialogProblemRepportOpen}
+                    setIsDialogOpen={setIsDialogProblemRepportOpen}
+                    repport={repport}
                 />
                 <DialogShowReportImpact isDialogOpen={isDialogShowImpactOpen} setIsDialogOpen={setIsDialogShowImpactOpen} repport={repport} />
             </section>

@@ -18,4 +18,9 @@ class ProblemRepport extends Model
     {
         return $this->belongsTo(Repport::class);
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

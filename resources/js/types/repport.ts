@@ -84,7 +84,15 @@ export interface Repport {
     repport_supports: RepportSupport[];
     repport_comments: RepportComment[];
     repport_impacts?: RepportImpact;
+    problem_repport: ProblemRepport[];
 }
+
+export type ProblemRepport = {
+    id: number;
+    reason: string;
+    user: User;
+    created_at: string;
+};
 
 export const GetRepportImpact: Record<
     string,

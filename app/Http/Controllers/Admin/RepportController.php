@@ -48,6 +48,7 @@ class RepportController extends Controller
                 'repportComments.proofs',
                 'repportImpacts',
                 'repportSupports.user',
+                'problemRepport.user'
             ]),
         ]);
     }
