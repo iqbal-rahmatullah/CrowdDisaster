@@ -42,11 +42,11 @@ export interface RepportSupport {
 export interface RepportImpact {
     id: number;
     repport_id: number;
-    name: string;
-    value: number;
-    icon: number;
-    created_at: string;
-    updated_at: string;
+    victim_died?: number;
+    victim_injured?: number;
+    damaged_house?: number;
+    damaged_building?: number;
+    damaged_village?: number;
 }
 
 export interface RepportCommentProof {
@@ -83,8 +83,31 @@ export interface Repport {
     repport_proofs: RepportProof[];
     repport_supports: RepportSupport[];
     repport_comments: RepportComment[];
-    repport_impacts: RepportImpact[];
+    repport_impacts?: RepportImpact;
 }
+
+export const GetRepportImpact: Record<
+    string,
+    {
+        title: string;
+    }
+> = {
+    victim_died: {
+        title: 'Korban Meninggal',
+    },
+    victim_injured: {
+        title: 'Korban Luka',
+    },
+    damaged_house: {
+        title: 'Rumah Rusak',
+    },
+    damaged_building: {
+        title: 'Bangunan Rusak',
+    },
+    damaged_village: {
+        title: 'Desa Terdampak',
+    },
+};
 
 export const GetRepportStatusLabel: Record<RepportStatus, string> = {
     [RepportStatus.NEED_SUPPORT]: 'Butuh Dukungan',

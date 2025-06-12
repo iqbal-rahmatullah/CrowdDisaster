@@ -34,7 +34,7 @@ class Repport extends Model
 
     public function repportImpacts()
     {
-        return $this->hasMany(RepportImpact::class)->orderBy('updated_at', 'desc');
+        return $this->hasOne(RepportImpact::class);
     }
 
     public function user()

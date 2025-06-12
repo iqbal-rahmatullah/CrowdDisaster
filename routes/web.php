@@ -25,6 +25,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::put('/{repport}', 'editStatusRepport')->name('repports.edit.status');
             Route::delete('/{repport}', 'delete')->name('repports.delete');
             Route::post('/{repport}/comment', 'addComment')->name('repports.comment');
+            Route::post('/{repport}/impact', 'addImpact')->name('repports.add.impact');
         });
     });
 

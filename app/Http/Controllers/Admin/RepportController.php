@@ -4,11 +4,13 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RepportCommentRequest;
+use App\Http\Requests\RepportImpactRequest;
 use App\Models\DisasterPosts;
 use App\Models\Repport;
 use App\Models\RepportCommentProof;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 use Illuminate\Support\Str;
 
@@ -114,6 +116,29 @@ class RepportController extends Controller
             return redirect()->back()->with([
                 'error' => 'Komentar Gagal Ditambahkan',
             ]);
+        }
+    }
+
+    public function addImpact(RepportImpactRequest $request, Repport $repport)
+    {
+        try {
+            $validated = $request->validated();
+
+            $repport->repportImpacts()->updateOrCreate(
+                ['repport_id' => $repport->id],
+                [
+                    'victim_died' => $validated['victim_died'],
+                    'victim_injured' => $validated['victim_injured'],
+                    'damaged_house' => $validated['damaged_house'],
+                    'damaged_building' => $validated['damaged_building'],
+                    'damaged_village' => $validated['damaged_village'],
+                ]
+            );
+
+            return redirect()->back()->with('success', 'Dampak bencana berhasil ditambahkan.');
+        } catch (\Exception $e) {
+            Log::debug('Error adding disaster impact: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Gagal menambahkan dampak bencana. Silakan coba lagi.');
         }
     }
 }

@@ -2,6 +2,7 @@ import { DialogDeleteRepport } from '@/components/dialog/DialogDeleteRepport';
 import { DialogEditRepport } from '@/components/dialog/DialogEditRepport';
 import { DialogRepportSupport } from '@/components/dialog/DialogRepportSupport';
 import { DialogShowCommentRepport } from '@/components/dialog/DialogShowCommentRepport';
+import { DialogShowReportImpact } from '@/components/dialog/DialogShowReportImpact';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -32,6 +33,8 @@ export default function DetailRepportPage({ repport }: { repport: Repport }) {
     const [isDialogEditRepportOpen, setIsDialogEditRepportOpen] = useState(false);
     const [isDialogDeleteRepportOpen, setIsDialogDeleteRepportOpen] = useState(false);
     const [isDialogShowCommentOpen, setIsDialogShowCommentOpen] = useState(false);
+    const [isDialogProblemRepportOpen, setIsDialogProblemRepportOpen] = useState(false);
+    const [isDialogShowImpactOpen, setIsDialogShowImpactOpen] = useState(false);
 
     //Breadcrumb
     const breadcrumbs: BreadcrumbItem[] = [
@@ -195,10 +198,10 @@ export default function DetailRepportPage({ repport }: { repport: Repport }) {
                                 <div className="flex justify-between gap-x-2">
                                     <div className="flex w-10/12 items-center gap-x-2">
                                         <HiOutlineTrendingDown className="text-lg text-yellow-400" />
-                                        <p className="text-xs font-medium">{repport.repport_impacts.length} dampak bencana </p>
+                                        <p className="text-xs font-medium">Dampak bencana </p>
                                     </div>
                                     <div className="flex w-2/12 justify-end">
-                                        <Button variant={'ghost'}>
+                                        <Button variant={'ghost'} onClick={() => setIsDialogShowImpactOpen(true)}>
                                             <ArrowRight className="h-4 w-4" />
                                         </Button>
                                     </div>
@@ -237,6 +240,7 @@ export default function DetailRepportPage({ repport }: { repport: Repport }) {
                     form={commentRepportForm}
                     onSubmit={onSubmitComment}
                 />
+                <DialogShowReportImpact isDialogOpen={isDialogShowImpactOpen} setIsDialogOpen={setIsDialogShowImpactOpen} repport={repport} />
             </section>
         </AppLayout>
     );

@@ -2,18 +2,17 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class RepportImpact extends Model
 {
-    use HasFactory;
-
     protected $fillable = [
         'repport_id',
-        'name',
-        'value',
-        'icon',
+        'victim_died',
+        'victim_injured',
+        'damaged_house',
+        'damaged_building',
+        'damaged_village',
     ];
 
     public function repport()

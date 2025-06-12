@@ -18,7 +18,7 @@ export const DialogAddRefugee = ({ isDialogOpen, setIsDialogOpen, form, onSubmit
     return (
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
             <DialogContent className="sm:max-w-[425px]">
-                <DialogTitle className="mb-3">Daftar Orang Yang Mendukung</DialogTitle>
+                <DialogTitle className="mb-3">{isEdit ? 'Edit Pengungsi' : 'Tambahkan Pengungsi'}</DialogTitle>
 
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">

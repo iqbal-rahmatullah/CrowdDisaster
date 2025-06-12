@@ -31,8 +31,6 @@ export const RepportChartByType = ({ allRepports }: { allRepports: Repport[] }) 
                 display: true,
                 color: '#fff',
                 formatter: (value, context) => {
-                    console.log('context', context);
-                    console.log('value', value);
                     // @ts-expect-error Is possible nul
                     const total: number = context.dataset.data.reduce((acc, curr) => acc + curr, 0);
                     const percentage = (value / total) * 100;

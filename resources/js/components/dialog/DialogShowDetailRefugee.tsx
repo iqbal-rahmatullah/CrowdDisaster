@@ -60,7 +60,7 @@ export const DialogShowDetailRefugee = ({ isDialogOpen, setIsDialogOpen, disaste
         <>
             <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
                 <DialogContent className="sm:max-w-[550px]">
-                    <DialogTitle className="mb-3">Daftar Orang Yang Mendukung</DialogTitle>
+                    <DialogTitle className="mb-3">Daftar Pengungsi</DialogTitle>
                     <div className="mb-4">
                         <Button
                             size={'sm'}
