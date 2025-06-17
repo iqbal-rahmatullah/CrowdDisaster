@@ -96,6 +96,13 @@ class RepportController extends Controller
                     'bukti_laporan' => $buktiLaporan,
                     'comments' => $comments,
                     'additional_information' => $laporan->additional_information ? json_decode($laporan->additional_information, true) : null,
+                    'impacts' => $laporan->repportImpacts ? $laporan->repportImpacts : [
+                        'victim_died' => 0,
+                        'victim_injured' => 0,
+                        'damaged_house' => 0,
+                        'damaged_building' => 0,
+                        'damaged_village' => 0,
+                    ]
                 ]
             ]);
         } else {
@@ -116,6 +123,13 @@ class RepportController extends Controller
                     'bukti_laporan' => $buktiLaporan,
                     'comments' => $comments,
                     'additional_information' => $laporan->additional_information ? json_decode($laporan->additional_information) : null,
+                    'impacts' => $laporan->repportImpacts ? $laporan->repportImpacts : [
+                        'victim_died' => 0,
+                        'victim_injured' => 0,
+                        'damaged_house' => 0,
+                        'damaged_building' => 0,
+                        'damaged_village' => 0,
+                    ]
                 ]
             ]);
         }
