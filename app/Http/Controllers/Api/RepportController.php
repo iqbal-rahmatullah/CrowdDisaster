@@ -41,12 +41,15 @@ class RepportController extends Controller
         }
 
         $is_laporan_sendiri = $laporan->user_id == auth()->user()->id;
-        $buktiLaporan = $laporan->repportProofs->map(function ($bukti) {
+        $buktiLaporan = !$laporan->repportProofs->isEmpty() ? $laporan->repportProofs->map(function ($bukti) {
             return [
                 'bukti_laporan' => $bukti->file_path,
                 'is_video' => $bukti->file_type == "video"
             ];
-        });
+        }) : [[
+            'bukti_laporan' => 'no-image.jpg',
+            'is_video' => false
+        ]];
 
         $comments = $laporan->repportComments->map(function ($comment) {
 
@@ -459,7 +462,7 @@ class RepportController extends Controller
                 'deskripsi_laporan' => $item->description,
                 'alamat_laporan' => $item->address,
                 'status_laporan' => $item->status,
-                'bukti_laporan' => $item->repportProofs ? $item->repportProofs[0]->file_path : null,
+                'bukti_laporan' => !$item->repportProofs->isEmpty() ? $item->repportProofs[0]->file_path : 'no-image.jpg',
                 'pendukung' => $item->repportSupports ? $item->repportSupports->count() : 0,
             ];
         });
@@ -495,8 +498,8 @@ class RepportController extends Controller
                 'deskripsi_laporan' => $item->description,
                 'alamat_laporan' => $item->address ? $item->address : null,
                 'status_laporan' => $item->status,
-                'bukti_laporan' => $item->repportProofs ? $item->repportProofs[0]->file_path : null,
-                'pendukung' => $item->repportSupports ? $item->repportSupports->count() : 0,
+                'bukti_laporan' => $item->repportProofs->isEmpty() ? 'no-image.jpg' : $item->repportProofs[0]->file_path,
+                'pendukung' => $item->repportSupports  ? $item->repportSupports->count() : 0,
             ];
         });
 
@@ -524,7 +527,7 @@ class RepportController extends Controller
             $latitude = (float) str_replace(',', '.', $laporan->latitude);
             $longitude = (float) str_replace(',', '.', $laporan->longitude);
 
-            $imagePath = asset('storage/' . $laporan->repportProofs[0]->file_path);
+            $imagePath = $laporan->repportProofs->isEmpty() ? asset('storage/' . 'no-image.jpg') : asset('storage/' . $laporan->repportProofs[0]->file_path);
 
             return [
                 'id' => $laporan->id,
@@ -576,8 +579,6 @@ class RepportController extends Controller
             'judul_laporan' => 'required|string',
             'deskripsi_laporan' => 'required|string',
             'radius' => 'required|numeric',
-            'bukti_laporan' => 'required|array',
-            'bukti_laporan.*.bukti_laporan' => 'required|file',
             'alamat_laporan' => 'required|string',
             'lat' => 'required|numeric',
             'type' => 'required|string',
@@ -627,19 +628,20 @@ class RepportController extends Controller
                 'additional_information' => json_encode($request->additional_information),
             ]);
 
-            $destinationPath = 'disaster_images/';
-            foreach ($request->bukti_laporan as $bukti) {
-                $file = $bukti['bukti_laporan'];
-                $extension = $file->getClientOriginalExtension();
-                $buktiLaporanName = Str::uuid() . '.' . $extension;
+            if ($request->hasFile('bukti_laporan')) {
+                foreach ($request->bukti_laporan as $bukti) {
+                    $file = $bukti['bukti_laporan'];
+                    $extension = $file->getClientOriginalExtension();
+                    $buktiLaporanName = Str::uuid() . '.' . $extension;
 
-                $imagePath = $file->storeAs('disaster_images', $buktiLaporanName, 'public');
+                    $imagePath = $file->storeAs('disaster_images', $buktiLaporanName, 'public');
 
-                RepportProof::create([
-                    'repport_id' => $laporan->id,
-                    'file_path' => $imagePath,
-                    'file_type' => strpos($file->getMimeType(), 'video') !== false ? 'video' : 'image',
-                ]);
+                    RepportProof::create([
+                        'repport_id' => $laporan->id,
+                        'file_path' => $imagePath,
+                        'file_type' => strpos($file->getMimeType(), 'video') !== false ? 'video' : 'image',
+                    ]);
+                }
             }
 
             return response()->json([

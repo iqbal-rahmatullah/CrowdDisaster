@@ -18,7 +18,7 @@ class DisasterPostController extends Controller
         return Inertia::render('dashboard/post-disaster/index', [
             'allDisasterPost' => DisasterPosts::with([
                 'disasterPostsProof',
-            ])->get(),
+            ])->paginate(8),
         ]);
     }
 

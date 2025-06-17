@@ -35,7 +35,7 @@ class RepportController extends Controller
                 'repportComments',
                 'repportImpacts',
                 'user',
-            ])->get(),
+            ])->paginate(8),
         ]);
     }
 

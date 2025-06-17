@@ -107,6 +107,7 @@ export default function RepportMapPage({ allRepports, allDisasterPost }: Repport
                             radius={repport.radius}
                             color={getRadiusColor(repport.status)}
                             fillOpacity={0.2}
+                            key={`circle-${repport.id}`}
                         />
                     </>
                 ))}

@@ -20,7 +20,7 @@ export const MarkerDisasterPost = ({ post }: { post: DisasterPost }) => {
             <Popup>
                 <div className="relative mb-4 h-[180px] w-full overflow-hidden rounded-lg">
                     <img
-                        src={`/storage/${post.disaster_posts_proof[0].file_path}`}
+                        src={post.disaster_posts_proof != null ? `/storage/${post.disaster_posts_proof[0].file_path}` : '/img/placeholder.png'}
                         className="h-full w-full object-cover"
                         alt="Gambar Posko Bencana"
                     />

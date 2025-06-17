@@ -12,7 +12,11 @@ export const MarkerRepport = ({ repport }: { repport: Repport }) => {
         <Marker key={repport.id} position={[parseFloat(repport.latitude), parseFloat(repport.longitude)]} icon={getIconMarker(repport)}>
             <Popup>
                 <div className="relative mb-4 h-[180px] w-full overflow-hidden rounded-lg">
-                    <img src={`/storage/${repport.repport_proofs[0].file_path}`} className="h-full w-full object-cover" alt="Bukti laporan" />
+                    <img
+                        src={repport.repport_proofs[0] != null ? `/storage/${repport.repport_proofs[0].file_path}` : '/img/placeholder.png'}
+                        className="h-full w-full object-cover"
+                        alt="Bukti laporan"
+                    />
                     <div className="absolute bottom-2 left-2">
                         <Badge className={`${GetRepportStatusBackground[repport.status]}`}>{GetRepportStatusLabel[repport.status]}</Badge>
                     </div>
