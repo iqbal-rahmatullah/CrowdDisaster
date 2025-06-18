@@ -27,7 +27,7 @@ export const DialogShowProblemReport = ({ isDialogOpen, setIsDialogOpen, repport
                                                 <p className="mb-2 text-xs text-gray-400">
                                                     {convertToIndonesianDate(new Date(problem.created_at).toLocaleString())}
                                                 </p>
-                                                <p>{problem.reason}</p>
+                                                <p className="text-sm">{problem.reason}</p>
                                             </div>
                                         </div>
                                     </div>

@@ -62,9 +62,9 @@ export default function PostDisasterPage({ allDisasterPost }: PostDisasterPagePr
                             <CardContent>
                                 <div className="relative mb-4 h-[200px] w-full overflow-hidden rounded-lg">
                                     <img
-                                        src={`storage/disaster_images/fdaae6d8-f8de-45ea-bbd6-51bd2edabf99.jpg`}
-                                        className="h-full w-full object-cover"
-                                        alt="Bukti laporan"
+                                        src={`/storage/${disasterPost.disaster_posts_proof[0]?.file_path}`}
+                                        alt={disasterPost.disaster_posts_proof[0]?.file_path}
+                                        className="h-full w-full rounded-lg object-cover"
                                     />
                                 </div>
 

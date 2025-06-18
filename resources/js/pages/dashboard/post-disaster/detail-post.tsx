@@ -1,3 +1,4 @@
+import { DialogDeletePostDisaster } from '@/components/dialog/DialogDeletePostDisaster';
 import { DialoagPostProgression } from '@/components/dialog/DialogPostProgression';
 import { DialogShowDetailRefugee } from '@/components/dialog/DialogShowDetailRefugee';
 import { Button } from '@/components/ui/button';
@@ -21,6 +22,7 @@ interface DetailPostDisasterPageProps {
 export default function DetailPostDisasterPage({ disasterPost }: DetailPostDisasterPageProps) {
     const [isShowDetailRefugee, setIsShowDetailRefugee] = useState(false);
     const [isShowDetailProgression, setIsShowDetailProgression] = useState(false);
+    const [isDialogDeleteDisasterPost, setIsDialogDeleteDisasterPost] = useState(false);
 
     const formAddProgression = useForm({
         resolver: zodResolver(disasterPostAddProgressionValidationSchema),
@@ -60,10 +62,14 @@ export default function DetailPostDisasterPage({ disasterPost }: DetailPostDisas
         },
     ];
 
+    const onDeleteDisasterPost = () => {
+        router.delete(`/disaster-posts/${disasterPost.id}`);
+    };
+
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title={disasterPost.title} />
-            <section className="px-7 pt-5">
+            <section className="px-7 py-5">
                 <Card>
                     <CardContent>
                         <Carousel>
@@ -149,8 +155,8 @@ export default function DetailPostDisasterPage({ disasterPost }: DetailPostDisas
 
                                 <div className="mt-4 space-y-3">
                                     <Button className="w-full bg-blue-500 py-5">Edit Posko Bencana</Button>
-                                    <Button className="w-full py-5" variant={'destructive'}>
-                                        Hapus Laporan
+                                    <Button className="w-full py-5" variant={'destructive'} onClick={() => setIsDialogDeleteDisasterPost(true)}>
+                                        Hapus Posko Bencana
                                     </Button>
                                 </div>
                             </CardContent>
@@ -166,6 +172,11 @@ export default function DetailPostDisasterPage({ disasterPost }: DetailPostDisas
                 progression={disasterPost.disaster_posts_progression}
                 form={formAddProgression}
                 onSubmit={onSubmitProgression}
+            />
+            <DialogDeletePostDisaster
+                isDialogOpen={isDialogDeleteDisasterPost}
+                setIsDialogOpen={setIsDialogDeleteDisasterPost}
+                onDelete={onDeleteDisasterPost}
             />
         </AppLayout>
     );

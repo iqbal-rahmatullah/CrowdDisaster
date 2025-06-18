@@ -35,6 +35,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::post('/', 'store')->name('disaster-posts.store');
             Route::get('/', 'index')->name('disaster-posts.index');
             Route::get('/{disasterPost}', 'show')->name('disaster-posts.show');
+            Route::delete('/{disasterPost}', 'delete')->name('disaster-posts.delete');
         });
 
         Route::controller(DisasterPostRefugeeController::class)->group(function () {

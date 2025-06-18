@@ -285,9 +285,10 @@ class RepportController extends Controller
 
         if ($successInsert) {
             $selectCountVoteLaporan = RepportSupport::where('repport_id', $id)->count();
+
             if ($selectCountVoteLaporan >= 10) {
                 $laporan->update([
-                    'status_laporan' => 'need_responsible'
+                    'status' => 'need_responsible'
                 ]);
             }
 
@@ -598,6 +599,8 @@ class RepportController extends Controller
             'type' => 'required|string',
             'long' => 'required|numeric',
             'additional_information' => 'required',
+            'bukti_laporan' => 'required|array',
+            'bukti_laporan.*.bukti_laporan' => 'required|file|mimes:jpg,jpeg,png,mp4,mov,avi|max:20480',
         ]);
 
         if ($validator->fails()) {
@@ -642,21 +645,21 @@ class RepportController extends Controller
                 'additional_information' => json_encode($request->additional_information),
             ]);
 
-            if ($request->hasFile('bukti_laporan')) {
-                foreach ($request->bukti_laporan as $bukti) {
-                    $file = $bukti['bukti_laporan'];
-                    $extension = $file->getClientOriginalExtension();
-                    $buktiLaporanName = Str::uuid() . '.' . $extension;
 
-                    $imagePath = $file->storeAs('disaster_images', $buktiLaporanName, 'public');
+            foreach ($request->bukti_laporan as $bukti) {
+                $file = $bukti['bukti_laporan'];
+                $extension = $file->getClientOriginalExtension();
+                $buktiLaporanName = Str::uuid() . '.' . $extension;
 
-                    RepportProof::create([
-                        'repport_id' => $laporan->id,
-                        'file_path' => $imagePath,
-                        'file_type' => strpos($file->getMimeType(), 'video') !== false ? 'video' : 'image',
-                    ]);
-                }
+                $imagePath = $file->storeAs('disaster_images', $buktiLaporanName, 'public');
+
+                RepportProof::create([
+                    'repport_id' => $laporan->id,
+                    'file_path' => $imagePath,
+                    'file_type' => strpos($file->getMimeType(), 'video') !== false ? 'video' : 'image',
+                ]);
             }
+
 
             return response()->json([
                 'success' => true,

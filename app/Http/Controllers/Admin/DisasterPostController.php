@@ -59,4 +59,14 @@ class DisasterPostController extends Controller
             return redirect()->back()->with('error', 'Gagal menambahkan posko bencana. Silakan coba lagi.');
         }
     }
+
+    public function delete(DisasterPosts $disasterPost)
+    {
+        try {
+            $disasterPost->delete();
+            return redirect()->route('disaster-posts.index')->with('success', 'Posko Bencana berhasil dihapus!');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Gagal menghapus posko bencana. Silakan coba lagi.');
+        }
+    }
 }
